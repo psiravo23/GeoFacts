@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import {AsyncStorage} from 'react-native';
-
+import jsonData from './Facts.json'
 
 
 class VillanovaTourScreen extends React.Component {
@@ -14,7 +14,7 @@ class VillanovaTourScreen extends React.Component {
       this.handlePress = this.handlePress.bind(this);
       this.onChangeCurrLong = this.onChangeCurrLong.bind(this);
       this.onChangeCurrLat = this.onChangeCurrLat.bind(this);
-      this.calculateDistance = this.calculateDistance.bind(this);
+      this.calcDistance = this.calcDistance.bind(this);
     }
 
     onChangeCurrLong(Long){
@@ -25,10 +25,28 @@ class VillanovaTourScreen extends React.Component {
     }
 
     async handlePress(){
-      
-    }
-    calculateDistance(currLong,currLat,long,lat){
+        try {
+            var CEER = await AsyncStorage.getItem("CEER");
+            var Bartley = await AsyncStorage.getItem("Bartley");
+            var Mendel = await AsyncStorage.getItem("Mendel");
+            var Falvey = await AsyncStorage.getItem("Falvey");
+            CEER = JSON.parse(CEER);
+            Bartley = JSON.parse(Bartley);
+            Mendel = JSON.parse(Mendel);
+            Falvey = JSON.parse(Falvey);
+        }
+        catch (error){
+        }
+          CeerDist = calcDistance(this.state.currLong,this.state.currLat,CEER["Longitude"], CEER["Latitude"]);
+          bartDist = calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
+          MendDist = calcDistance(this.state.currLong,this.state.currLat,Mendel["Longitude"], Mendel["Latitude"]);
+          FalveyDist = calcDistance(this.state.currLong,this.state.currLat,Falvey["Longitude"], Falvey["Latitude"]);
 
+    }
+    calcDistance(currLong,currLat,long,lat){
+      var distance = Math.sqrt(Math.pow(currLong+long,2)+Math.pow(currLat+lat,2));
+
+      return distance;
     }
     render(){
       return (
@@ -64,15 +82,13 @@ export default class App extends React.Component {
 
     async componentDidMount(){
         try {
-          /*
-          const time = await AsyncStorage.getItem("timeStamp");
-          if(time == null){
-            await AsyncStorage.setItem("timeStamp", new Date().toLocaleString());
-            const jsonData = require("./Facts.json");
-            console.log("Hello");
-            await AsyncStorage.multiSet([["CEER", JSON.stringify(jsonData["CEER"])],["Bartley", JSON.stringify(jsonData["Bartley"])],["Mendel", JSON.stringify(jsonData["Mendel"])], ["Falvey",JSON.stringify(jsonData["Falvey"])]]);
-          }*/
-          AsyncStorage.clear();
+          //const time = await AsyncStorage.getItem("timeStamp");
+          //if(time == null){
+            //await AsyncStorage.setItem("timeStamp", new Date().toLocaleString());
+            console.log(jsonData2.CEER);
+            //await AsyncStorage.multiSet([["CEER", JSON.stringify(jsonData["CEER"])],["Bartley", JSON.stringify(jsonData["Bartley"])],["Mendel", JSON.stringify(jsonData["Mendel"])], ["Falvey",JSON.stringify(jsonData["Falvey"])]]);
+          //}*/
+          //await AsyncStorage.clear();
         }
         catch (error){
         }
