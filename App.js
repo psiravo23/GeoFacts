@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import {AsyncStorage} from 'react-native';
-import jsonData from './Facts.json'
+let jsonData = require('./Facts.json');
 
 
 class VillanovaTourScreen extends React.Component {
@@ -11,7 +11,7 @@ class VillanovaTourScreen extends React.Component {
       var date = new Date().toLocaleString();
       this.state = {timeStamp: date, currLong:"", currLat: ""};
 
-      this.handlePress = this.handlePress.bind(this);
+      //this.handlePress = this.handlePress.bind(this);
       this.onChangeCurrLong = this.onChangeCurrLong.bind(this);
       this.onChangeCurrLat = this.onChangeCurrLat.bind(this);
       this.calcDistance = this.calcDistance.bind(this);
@@ -24,6 +24,7 @@ class VillanovaTourScreen extends React.Component {
       this.setState({currLat:Lat});
     }
 
+    /*
     async handlePress(){
         try {
             var CEER = await AsyncStorage.getItem("CEER");
@@ -37,12 +38,13 @@ class VillanovaTourScreen extends React.Component {
         }
         catch (error){
         }
-          CeerDist = calcDistance(this.state.currLong,this.state.currLat,CEER["Longitude"], CEER["Latitude"]);
-          bartDist = calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
-          MendDist = calcDistance(this.state.currLong,this.state.currLat,Mendel["Longitude"], Mendel["Latitude"]);
-          FalveyDist = calcDistance(this.state.currLong,this.state.currLat,Falvey["Longitude"], Falvey["Latitude"]);
+          var CeerDist = this.calcDistance(this.state.currLong,this.state.currLat,CEER["Longitude"], CEER["Latitude"]);
+          var bartDist = this.calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
+          var MendDist = this.calcDistance(this.state.currLong,this.state.currLat,Mendel["Longitude"], Mendel["Latitude"]);
+          var FalveyDist = this.calcDistance(this.state.currLong,this.state.currLat,Falvey["Longitude"], Falvey["Latitude"]);
 
-    }
+    }*/
+
     calcDistance(currLong,currLat,long,lat){
       var distance = Math.sqrt(Math.pow(currLong+long,2)+Math.pow(currLat+lat,2));
 
@@ -85,7 +87,7 @@ export default class App extends React.Component {
           //const time = await AsyncStorage.getItem("timeStamp");
           //if(time == null){
             //await AsyncStorage.setItem("timeStamp", new Date().toLocaleString());
-            console.log(jsonData2.CEER);
+            console.log(jsonData.Mendel.Latitude);
             //await AsyncStorage.multiSet([["CEER", JSON.stringify(jsonData["CEER"])],["Bartley", JSON.stringify(jsonData["Bartley"])],["Mendel", JSON.stringify(jsonData["Mendel"])], ["Falvey",JSON.stringify(jsonData["Falvey"])]]);
           //}*/
           //await AsyncStorage.clear();
