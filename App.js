@@ -15,16 +15,8 @@ class VillanovaTourScreen extends React.Component {
       this.calcDistance = this.calcDistance.bind(this);
       this.calRandomFact = this.calRandomFact.bind(this);
       this.findGPSCords = this.findGPSCords.bind(this);
-      this.onChangeCurrLong = this.onChangeCurrLong.bind(this);
-      this.onChangeCurrLat = this.onChangeCurrLat.bind(this);
     }
 
-    onChangeCurrLong(Long){
-      this.setState({currLong:Long});
-    }
-    onChangeCurrLat(Lat){
-      this.setState({currLat:Lat});
-    }
     findGPSCords() {
        navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -92,18 +84,8 @@ class VillanovaTourScreen extends React.Component {
           <View>
             <View style={styles.screenContainer}>
             <Text style={styles.title}> Vilanova University Interactive Tour </Text>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={this.onChangeCurrLong}
-                defaultValue="Current Longitude"
-            />
-            <TextInput
-                style={styles.textInput}
-                onChangeText={this.onChangeCurrLat}
-                defaultValue="Current Latitude"
-            />
               <Button
-                  onPress={this.handlePress}
+                  onPress={this.findGPSCords}
                   title="Tell Me About My Location"
               />
               <Text> {this.state.currLong} {this.state.currLat} </Text>
