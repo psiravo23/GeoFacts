@@ -43,12 +43,12 @@ class VillanovaTourScreen extends React.Component {
           var BartDist = this.calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
           var MendDist = this.calcDistance(this.state.currLong,this.state.currLat,Mendel["Longitude"], Mendel["Latitude"]);
           var FalveyDist = this.calcDistance(this.state.currLong,this.state.currLat,Falvey["Longitude"], Falvey["Latitude"]);
+
           var distances = [CeerDist,BartDist,MendDist,FalveyDist];
           var minValue = Math.min(...distances);
-          console.log(distances);
-          console.log(minValue);
           distances = {"CEER": CeerDist, "Bartley":BartDist, "Mendel":MendDist, "Falvey":FalveyDist};
 
+          //Find key of minimum distance value
           var minKey;
           for (var key in distances){
             if (distances[key] == minValue){
@@ -63,12 +63,9 @@ class VillanovaTourScreen extends React.Component {
           catch (error){
           }
 
-          console.log(closestBuilding.Facts);
           var randomFact = this.calRandomFact(closestBuilding.Facts);
-          console.log(randomFact);
 
-
-
+          this.setState({building:minKey, fact:randomFact});
     }
 
     calcDistance(currLong,currLat,long,lat){
@@ -100,7 +97,8 @@ class VillanovaTourScreen extends React.Component {
                   title="Tell Me About My Location"
               />
               <Text> {this.state.currLong} {this.state.currLat} </Text>
-              <Text> {this.state.test} </Text>
+              <Text> {this.state.building}</Text>
+              <Text> {this.state.fact}</Text>
             </View>
             <View style={styles.timeStampText}>
               <Text> {this.state.timeStamp} </Text>
