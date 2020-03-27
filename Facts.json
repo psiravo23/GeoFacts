@@ -1,8 +1,8 @@
 [
   {
     "building":"CEER",
-    "Longitude":45,
-    "Latitude":70,
+    "Longitude":40.0366404,
+    "Latitude":-75.3457346,
     "Facts": [
       "CEER stands for the Center for Engineering Edcuation and Research. It opened in 1998 and sports impressive labs such as a wind tunnel, an anechoic chamber and 3D printing and modeling.",
       "Villanova's School of Engineering is ranked in the top 15 in the country by US News & World Report.",
@@ -16,8 +16,8 @@
   },
   {
     "building":"Bartley",
-    "Longitude":40,
-    "Latitude":60,
+    "Longitude":40.034595,
+    "Latitude":-75.3383853,
     "Facts": [
       "The Villanova School of Business was founded in 1922 by Father Joseph Bartley.",
       "Bartley Hall was constructed in 1960, remodeled and expanded in 2002, and renovations plans are in the works for 2015.",
@@ -31,8 +31,8 @@
   },
   {
     "building":"Mendel",
-    "Longitude":40,
-    "Latitude":90,
+    "Longitude":40.0378151,
+    "Latitude":-75.3419795,
     "Facts": [
       "James Peniston sculpted the statue of Gregor Mendel. Peniston is known for his statue of Benjamin Franklin in Philadelphia and the WWII monument in Washington, D.C.",
       "Mendel Science Center is named after geneticist and Augustinian monk Gregor Mendel. Mendel is known for having demonstrated inheritance of traits in peas during the mid-1800s.",
@@ -44,8 +44,8 @@
   },
   {
     "building":"Falvey",
-    "Longitude":35,
-    "Latitude":75,
+    "Longitude":40.037469,
+    "Latitude":-75.342546,
     "Facts": [
       "Falvey Library is home to the Idea Accelerator, designed to increase cross-college interaction within the Villanova community and a multidisciplinary approach to generating and advancing new ideas. ",
       "Villanova constructed a virtual reality CAVE facility in Falvey with a $1.67 million grant from the National Science Foundation.",
