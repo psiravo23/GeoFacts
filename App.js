@@ -12,19 +12,20 @@ class VillanovaTourScreen extends React.Component {
       this.state = {timeStamp: date, currLong:"", currLat: "", building: "", fact: ""};
 
       this.handlePress = this.handlePress.bind(this);
-      this.onChangeCurrLong = this.onChangeCurrLong.bind(this);
-      this.onChangeCurrLat = this.onChangeCurrLat.bind(this);
       this.calcDistance = this.calcDistance.bind(this);
       this.calRandomFact = this.calRandomFact.bind(this);
+      this.findGPSCords = this.findGPSCords.bind(this);
     }
 
-    onChangeCurrLong(Long){
-      this.setState({currLong:Long});
-    }
-    onChangeCurrLat(Lat){
-      this.setState({currLat:Lat});
-    }
-
+    findGPSCords() {
+       navigator.geolocation.getCurrentPosition(
+        (position) => {
+           this.setState({currLong: position.coords.longitude, currLat: position.coords.latitude}, this.handlePress);
+        },
+        (error) => this.setState({error: error.message}),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+     }
 
     async handlePress(){
         try {
@@ -82,18 +83,8 @@ class VillanovaTourScreen extends React.Component {
       return (
           <View>
             <View style={styles.screenContainer}>
-            <TextInput
-                style={styles.textInput}
-                onChangeText={this.onChangeCurrLong}
-                defaultValue="Current Longitude"
-            />
-            <TextInput
-                style={styles.textInput}
-                onChangeText={this.onChangeCurrLat}
-                defaultValue="Current Latitude"
-            />
               <Button
-                  onPress={this.handlePress}
+                  onPress={this.findGPSCords}
                   title="Tell Me About My Location"
               />
               <Text> {this.state.currLong} {this.state.currLat} </Text>
