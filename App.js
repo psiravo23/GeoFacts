@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import {AsyncStorage} from 'react-native';
-let jsonData = require('./Facts.json');
+const jsonData = require("./Facts.json");
 
 
 class VillanovaTourScreen extends React.Component {
@@ -9,12 +9,13 @@ class VillanovaTourScreen extends React.Component {
     constructor(props) {
       super(props)
       var date = new Date().toLocaleString();
-      this.state = {timeStamp: date, currLong:"", currLat: ""};
+      this.state = {timeStamp: date, currLong:"", currLat: "", building: "", fact: ""};
 
-      //this.handlePress = this.handlePress.bind(this);
+      this.handlePress = this.handlePress.bind(this);
       this.onChangeCurrLong = this.onChangeCurrLong.bind(this);
       this.onChangeCurrLat = this.onChangeCurrLat.bind(this);
       this.calcDistance = this.calcDistance.bind(this);
+      this.calRandomFact = this.calRandomFact.bind(this);
     }
 
     onChangeCurrLong(Long){
@@ -24,7 +25,7 @@ class VillanovaTourScreen extends React.Component {
       this.setState({currLat:Lat});
     }
 
-    /*
+
     async handlePress(){
         try {
             var CEER = await AsyncStorage.getItem("CEER");
@@ -39,16 +40,46 @@ class VillanovaTourScreen extends React.Component {
         catch (error){
         }
           var CeerDist = this.calcDistance(this.state.currLong,this.state.currLat,CEER["Longitude"], CEER["Latitude"]);
-          var bartDist = this.calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
+          var BartDist = this.calcDistance(this.state.currLong,this.state.currLat,Bartley["Longitude"], Bartley["Latitude"]);
           var MendDist = this.calcDistance(this.state.currLong,this.state.currLat,Mendel["Longitude"], Mendel["Latitude"]);
           var FalveyDist = this.calcDistance(this.state.currLong,this.state.currLat,Falvey["Longitude"], Falvey["Latitude"]);
+          var distances = [CeerDist,BartDist,MendDist,FalveyDist];
+          var minValue = Math.min(...distances);
+          console.log(distances);
+          console.log(minValue);
+          distances = {"CEER": CeerDist, "Bartley":BartDist, "Mendel":MendDist, "Falvey":FalveyDist};
 
-    }*/
+          var minKey;
+          for (var key in distances){
+            if (distances[key] == minValue){
+              minKey = key;
+            }
+          }
+
+          try {
+            var closestBuilding = await AsyncStorage.getItem(minKey);
+            closestBuilding = JSON.parse(closestBuilding);
+          }
+          catch (error){
+          }
+
+          console.log(closestBuilding.Facts);
+          var randomFact = this.calRandomFact(closestBuilding.Facts);
+          console.log(randomFact);
+
+
+
+    }
 
     calcDistance(currLong,currLat,long,lat){
       var distance = Math.sqrt(Math.pow(currLong+long,2)+Math.pow(currLat+lat,2));
 
       return distance;
+    }
+
+    calRandomFact(Facts){
+      var randIndex = Math.floor(Math.random()* Facts.length);
+      return Facts[randIndex];
     }
     render(){
       return (
@@ -83,14 +114,13 @@ class VillanovaTourScreen extends React.Component {
 export default class App extends React.Component {
 
     async componentDidMount(){
+
         try {
-          //const time = await AsyncStorage.getItem("timeStamp");
-          //if(time == null){
-            //await AsyncStorage.setItem("timeStamp", new Date().toLocaleString());
-            console.log(jsonData.Mendel.Latitude);
-            //await AsyncStorage.multiSet([["CEER", JSON.stringify(jsonData["CEER"])],["Bartley", JSON.stringify(jsonData["Bartley"])],["Mendel", JSON.stringify(jsonData["Mendel"])], ["Falvey",JSON.stringify(jsonData["Falvey"])]]);
-          //}*/
-          //await AsyncStorage.clear();
+          const time = await AsyncStorage.getItem("timeStamp");
+          if(time == null){
+            await AsyncStorage.setItem("timeStamp", new Date().toLocaleString());
+            await AsyncStorage.multiSet([["CEER", JSON.stringify(jsonData[0])],["Bartley", JSON.stringify(jsonData[1])],["Mendel", JSON.stringify(jsonData[2])], ["Falvey",JSON.stringify(jsonData[3])]]);
+          }
         }
         catch (error){
         }
